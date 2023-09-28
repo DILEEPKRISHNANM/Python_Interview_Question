@@ -1,121 +1,120 @@
 class Node:
     def __init__(self,data):
-        self.data=data
-        self.next=None
-    
+        self.data =  data
+        self.next = None
 
-class Linkedlist:
+
+class LinkedList:
     def __init__(self):
-        self.head=None
+        self.head = None
 
-    def appendnode(self,data):
+    def appendLast(self,data):
         new_node=Node(data)
-        if self.head==None:
-            self.head=new_node
+        if self.head is None:
+            self.head = new_node
             return
         else:
-            current_node=self.head
-            while current_node.next is not None:
-                current_node=current_node.next
-            current_node.next=new_node
-
-    def printll(self):
-        current_node=self.head
-        while current_node is not None:
-            print(current_node.data,end=" ")
-            current_node=current_node.next
-        print("\n")
+            temp = self.head
+            while temp.next is not None:
+                temp = temp.next
+            temp.next = new_node
 
 
-    def sortedMerge(self, a, b):
+    def printLL(self):
+        if self.head is None:
+            return
+        else:
+            temp = self.head
+            while temp is not None:
+                print(temp.data,end = " ") 
+                temp=temp.next
+
+            
+
+    def sortedMerge(self,a,b):
         result = None
-         
-        # Base cases
         if a == None:
-            return b 
-        if b == None:
+            return b
+        elif b == None:
             return a
-             
-        # pick either a or b and recur..
-        if a.data <= b.data:
-            result = a
-            result.next = self.sortedMerge(a.next, b)
+
         else:
-            result = b
-            result.next = self.sortedMerge(a, b.next)
+             if a.data <= b.data:
+                result = a
+                result.next = self.sortedMerge(a.next,b)
+             else:
+                result = b
+                result.next = self.sortedMerge(a,b.next)
+        
         return result
-     
-    def mergeSort(self,h):
-        if h == None or h.next == None:
-            return h
-        else:
-            middle=self.getMiddle(h)
-            nexttomiddle=middle.next
-            middle.next=None
-            left=self.mergeSort(h)
-            right=self.mergeSort(nexttomiddle)
 
 
-            sortedlist=self.sortedMerge(left,right)
-            return sortedlist
-
-
-
-    #function for finding second last element.a
-    def secondlast(self):
-        current_node=self.head
-        while current_node.next.next != None:
-            current_node=current_node.next
-        print(current_node.data)
-
-
-
-
-
-     
-    # Utility function to get the middle
-    # of the linked list
     def getMiddle(self,head):
         if head is None:
             return head
-        slow=head
-        fast=head
+        else:
+            slow = head
+            fast = head
 
 
+            while fast.next != None and fast.next.next != None:
+                slow = slow.next
+                fast = fast.next.next
 
-        while fast.next != None and fast.next.next != None:
-            slow=slow.next
-            fast=fast.next.next
 
         return slow
 
 
 
+    def mergeSort(self,h):
+        if h == None or h.next == None:
+            return h
+        else:
+            middle = self.getMiddle(h)
+            nexttomiddle = middle.next
+            middle.next = None
+
+            left = self.mergeSort(h)
+            right = self.mergeSort(nexttomiddle)
+
+
+            mergesortedlist = self.sortedMerge(left,right)
+
+            return mergesortedlist
 
 
 
-li=Linkedlist()
-li.appendnode(8)
-li.appendnode(3)
-li.appendnode(4)
-li.appendnode(7)
+
+
+li=LinkedList()
+
+li.appendLast(5)
+
+
+li.appendLast(8)
+
+
+li.appendLast(3)
+
+
+li.appendLast(6)
 
 
 
-print("Before Sorting.....!!!!")
+print("Before Sorting ...")
 
-li.printll()
-li.head=li.mergeSort(li.head)
-
-
+li.printLL()
+print("\n")
 
 
-print("After  Sorting.....!!!!")
+li.head = li.mergeSort(li.head)
 
-li.printll()
+print("After Sorting...")
+print("\n")
 
 
-li.secondlast()
+li.printLL()
 
-        
 
+print("\n")
+             
